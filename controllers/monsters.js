@@ -7,6 +7,8 @@ module.exports = {
 
 function create(req, res) {
     res.json({ data: 'working' })
+    console.log(req.body, " <--req.body", req.file, " <--photo", req.user, '<--req.user')
+
 }
 
 async function index(req, res) {
