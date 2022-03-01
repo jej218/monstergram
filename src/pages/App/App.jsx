@@ -23,7 +23,7 @@ function App() {
   if (user) {
     return (
       <Routes>
-        <Route path="/" element={<Feed />} />
+        <Route path="/" element={<Feed handleLogout={handleLogout} />} />
         <Route
           path="/login"
           element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}
