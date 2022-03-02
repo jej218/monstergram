@@ -8,7 +8,7 @@ import * as likesAPI from '../../utils/likeApi';
 
 export default function Feed({ user, handleLogout }) {
 
-    const [monsters, setMonsters] = useState([])
+    const [monsters, setMonsters] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 

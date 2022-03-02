@@ -11,6 +11,7 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName, hand
         imageUrl: `${monsterImageUrlBase}${starterSeed}/image/png?size=300`
     })
     const [selection, setSelection] = useState('alien')
+    const [colorVariation, setColorVariation] = useState(Math.random().toString())
 
     const nameTypes = [
         {

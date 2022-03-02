@@ -1,8 +1,6 @@
-## Setup 
+## Monster-gram
 
-1. Clone the repo
-2. Rename the folder to your Project, you can use the `mv` command like `mv mern-boilerplate yourprojectname`
-3. Delete the `.git` file, when you are in the root of the file, you can press `ls` and you should see a `.git` file, then go ahead and run `rm -rf .git`
+A Version of the Pupstagram App with a twist = Instead of uploading photos, posts are random pixel images in a "Galaga-Like" style. There Is also functionality to call an API to generate random names for the pixel monster.
 
 
 #### Setup your git repo
