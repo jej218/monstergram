@@ -4,9 +4,9 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 const monsterDetailUrl = 'https://api.fungenerators.com/name/generate?category=alien&limit=1&start='
 const monsterImageUrlBase = 'https://app.pixelencounter.com/api/v2/basic/svgmonsters/'
-const starterSeed = (Math.floor(Math.random() * 2147483640)).toString()
 
-export default function AddMonster({ handleAddMonster, handleNewRandomName }) {
+export default function AddMonster({ handleAddMonster, handleNewRandomName, handleNewRandomUrl, startSeed }) {
+    const [starterSeed, setStarterSeed] = useState(startSeed)
     const [state, setState] = useState({
         title: '',
         caption: '',
@@ -21,7 +21,17 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName }) {
             })
         }
         makeApiCall()
-    }, [handleNewRandomName])
+    }, [])
+    useEffect(() => {
+        const changeUrl = async () => {
+            setState({
+                ...state,
+                imageUrl: `${monsterImageUrlBase}${starterSeed}/image/png?size=300`
+            }
+            )
+        }
+        changeUrl();
+    }, [])
 
     function handleChange(e) {
         setState({
@@ -29,27 +39,34 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName }) {
             [e.target.name]: e.target.value
         })
     }
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         const submitData = {
             'title': state.title,
             'caption': state.caption,
             'imageUrl': state.imageUrl
         }
-        handleAddMonster(submitData)
-    }
-    function handleNewImage(e) {
-        e.preventDefault()
-        let imageSeed = (Math.floor(Math.random() * 2147483640)).toString()
-        let monsterImageUrl = `${monsterImageUrlBase}${imageSeed}/image/png?size=300`
-        setState({
-            ...state,
-            imageUrl: monsterImageUrl
+        handleAddMonster(submitData).then(function () {
+            handleNewName(e)
         })
     }
 
-    function handleNewName(e) {
+    function handleNewImage(e) {
         e.preventDefault()
+        let seed = Math.floor(Math.random() * 2904).toString()
+        const changeUrl = async () => {
+            setState({
+                ...state,
+                imageUrl: `${monsterImageUrlBase}${seed}/image/png?size=300`
+            })
+        }
+        changeUrl();
+    }
+
+    function handleNewName(e) {
+        if (e) {
+            e.preventDefault()
+        }
         const makeApiCall = async () => {
             let newName = await handleNewRandomName()
             setState({
@@ -60,7 +77,7 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName }) {
         makeApiCall();
     }
     return (
-        <Grid textAlign='center' style={{ height: '25vh' }} verticalAlign='middle'>
+        <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
 
                 <Segment>

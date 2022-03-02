@@ -8,8 +8,23 @@ const s3 = new S3(); // initialize the construcotr
 
 module.exports = {
   signup,
-  login
+  login,
+  profile
 };
+
+async function profile(req, res) {
+  try {
+    const user = await User.findOne({ username: req.params.username })
+    if (!user) return res.status(404).json({ err: 'User not found' })
+
+    const monsters = await Monster.find({ user: user._id }).populate("user").exec();
+    console.log(monsters, ' this monsters')
+    res.status(200).json({ monsters: monsters, user: user })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ err })
+  }
+}
 
 async function signup(req, res) {
   console.log(req.body, '<req.body')

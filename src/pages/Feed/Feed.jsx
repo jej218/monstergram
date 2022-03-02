@@ -11,10 +11,8 @@ export default function Feed() {
     const [monsters, setMonsters] = useState([])
 
     async function handleAddMonster(monsterInfo) {
-        console.log(monsterInfo, 'monsterInfo')
         try {
             const data = await monstersAPI.create(monsterInfo)
-            console.log(data, ' < - this is the repsonse from the server, this will contain the info we want to use to update our posts state')
             setMonsters(monsters => [data.monster, ...monsters])
         } catch (err) {
             console.log(err)
@@ -29,11 +27,48 @@ export default function Feed() {
             console.log(err)
         }
     }
+
+    async function handleNewRandomUrl() {
+        try {
+            let imageSeed = ((Math.floor(Math.random() * 2147483640)).toString())
+            return imageSeed
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    async function getMonsters() {
+        try {
+            const data = await monstersAPI.getAll();
+            setMonsters([...data.monsters])
+        } catch (err) {
+            console.log(err, ' this is the error')
+        }
+    }
+
+    useEffect(() => {
+        getMonsters()
+    }, [])
+
     return (
-        <>
-            <Header />
-            <AddMonster handleAddMonster={handleAddMonster} handleNewRandomName={handleNewRandomName} />
-            <MonsterFeed />
-        </>
+        <Grid centered >
+            <Grid.Row>
+                <Grid.Column>
+                    <Header />
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+                <Grid.Column style={{ maxWidth: 450 }}>
+                    <AddMonster startSeed={((Math.floor(Math.random() * 2147483640)).toString())} handleAddMonster={handleAddMonster} handleNewRandomName={handleNewRandomName} handleNewRandomUrl={handleNewRandomUrl} />
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+                <Grid.Column style={{ maxWidth: 450 }}>
+
+                    <MonsterFeed monsters={monsters} numPhotosCol={1} />
+                </Grid.Column>
+            </Grid.Row>
+        </Grid>
+
     )
 }

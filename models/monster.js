@@ -6,7 +6,7 @@ const likesSchema = mongoose.Schema({
 })
 
 
-const monsterSchema = new mongoose.Schema({
+const monsterSchema = mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     imageUrl: String,
     title: String,
@@ -14,4 +14,4 @@ const monsterSchema = new mongoose.Schema({
     likes: [likesSchema]
 })
 
-module.exports = mongoose.model('Monster', monsterSchema);
+module.exports = mongoose.model('Model', monsterSchema);

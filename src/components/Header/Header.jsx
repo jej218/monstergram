@@ -7,7 +7,7 @@ export default function PageHeader() {
     return (
         <Segment>
             <Header as='h2' >
-                This is the HEADER!
+                MONSTERGRAM
             </Header>
         </Segment>
     )

@@ -12,8 +12,9 @@ module.exports = {
 async function create(req, res, err) {
     try {
 
-        let monster = await new Monster(req.body);
-        console.log(monster, 'monster')
+        let monster = await new Monster({ ...req.body, user: req.user });
+        monster = await monster.populate('user')
+        console.log(monster, 'monster create controller')
         monster.save().then(monster => {
 
             res.status(201).json({ monster })
