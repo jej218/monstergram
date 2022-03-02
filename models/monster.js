@@ -8,8 +8,8 @@ const likesSchema = mongoose.Schema({
 
 const monsterSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    photoUrl: String,
-    name: String,
+    imageUrl: String,
+    title: String,
     caption: String,
     likes: [likesSchema]
 })

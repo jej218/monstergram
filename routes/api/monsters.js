@@ -2,13 +2,10 @@ const express = require('express');
 const router = express.Router();
 const monstersCtrl = require('../../controllers/monsters');
 const multer = require('multer');
-const upload = multer();
+const upload = multer(); // <- handles multipart/formdata requests(photos)
 
 router.post('/', monstersCtrl.create);
 router.get('/', monstersCtrl.index)
-
-
-
 
 
 

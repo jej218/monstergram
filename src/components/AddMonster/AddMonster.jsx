@@ -1,37 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
+
 const monsterDetailUrl = 'https://api.fungenerators.com/name/generate?category=alien&limit=1&start='
 const monsterImageUrlBase = 'https://app.pixelencounter.com/api/v2/basic/svgmonsters/'
-
 const starterSeed = (Math.floor(Math.random() * 2147483640)).toString()
 
-export default function AddMonster(props) {
+export default function AddMonster({ handleAddMonster, handleNewRandomName }) {
     const [state, setState] = useState({
-        name: '',
+        title: '',
         caption: '',
         imageUrl: `${monsterImageUrlBase}${starterSeed}/image/png?size=300`
     })
-
     useEffect(() => {
         const makeApiCall = async () => {
-            let nameSeed = (Math.floor(Math.random() * 200)).toString()
-            const res = await fetch(`${monsterDetailUrl}${nameSeed}`, {
-                headers: {
-                    'X-Fungenerators-Api-Secret': '6YQ3XGQGA8rqGi0mrZtHFgeF',
-                    'Content-Type': 'application/json'
-                }
-            }
-            )
-            const json = await res.json()
-            console.log(json.contents.names)
+            let newName = await handleNewRandomName()
             setState({
                 ...state,
-                name: json.contents.names[0]
+                title: newName
             })
         }
-        makeApiCall();
-    }, [])
+        makeApiCall()
+    }, [handleNewRandomName])
 
     function handleChange(e) {
         setState({
@@ -41,9 +31,15 @@ export default function AddMonster(props) {
     }
     function handleSubmit(e) {
         e.preventDefault()
-        props.handleAddMonster(state)
+        const submitData = {
+            'title': state.title,
+            'caption': state.caption,
+            'imageUrl': state.imageUrl
+        }
+        handleAddMonster(submitData)
     }
     function handleNewImage(e) {
+        e.preventDefault()
         let imageSeed = (Math.floor(Math.random() * 2147483640)).toString()
         let monsterImageUrl = `${monsterImageUrlBase}${imageSeed}/image/png?size=300`
         setState({
@@ -53,19 +49,12 @@ export default function AddMonster(props) {
     }
 
     function handleNewName(e) {
+        e.preventDefault()
         const makeApiCall = async () => {
-            let nameSeed = (Math.floor(Math.random() * 200)).toString()
-            const res = await fetch(`${monsterDetailUrl}${nameSeed}`, {
-                headers: {
-                    'X-Fungenerators-Api-Secret': '6YQ3XGQGA8rqGi0mrZtHFgeF',
-                    'Content-Type': 'application/json'
-                }
-            }
-            )
-            const json = await res.json()
+            let newName = await handleNewRandomName()
             setState({
                 ...state,
-                name: json.contents.names[0]
+                title: newName
             })
         }
         makeApiCall();
@@ -75,7 +64,8 @@ export default function AddMonster(props) {
             <Grid.Column style={{ maxWidth: 450 }}>
 
                 <Segment>
-                    <Form autoComplete="off" >
+                    <Form autoComplete="off"
+                        onSubmit={handleSubmit}>
                         <img src={state.imageUrl} alt='' />
                         <Button
                             className="btn"
@@ -83,9 +73,9 @@ export default function AddMonster(props) {
                         >NEW RANDOM MONSTER</Button>
                         <Form.Input
                             className="form-control"
-                            name="name"
-                            value={state.name}
-                            placeholder={state.name}
+                            name="title"
+                            value={state.title}
+                            placeholder={state.title}
                             onChange={handleChange}
                             required
                         />
@@ -104,7 +94,6 @@ export default function AddMonster(props) {
                         <Button
                             type="submit"
                             className="btn"
-                            onClick={handleSubmit}
                         >
                             ADD MONSTER
                         </Button>
@@ -112,5 +101,5 @@ export default function AddMonster(props) {
                 </Segment>
             </Grid.Column>
         </Grid >
-    )
+    );
 }

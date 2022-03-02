@@ -1,13 +1,27 @@
 const Monster = require('../models/monster');
 
+const { v4: uuidv4 } = require("uuid");
+const S3 = require("aws-sdk/clients/s3");
+const s3 = new S3(); // initialize the S3 constructor
+
+const BUCKET = process.env.BUCKET;
 module.exports = {
     create,
     index
 }
+async function create(req, res, err) {
+    try {
 
-function create(req, res) {
-    res.json({ data: 'working' })
-    console.log(req.body, " <--req.body", req.file, " <--photo", req.user, '<--req.user')
+        let monster = await new Monster(req.body);
+        console.log(monster, 'monster')
+        monster.save().then(monster => {
+
+            res.status(201).json({ monster })
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ err })
+    }
 
 }
 
