@@ -18,3 +18,6 @@ A Version of the Pupstagram App with a twist - Instead of uploading photos, post
 11. Add more fun Semantic Features
 
 #### APIs I used
+
+1. [Pixel Encounter](https://pixelencounter.com/Api/SvgMonstersV2)
+2. [Fun Generators](https://fungenerators.com/api/namegen/)
