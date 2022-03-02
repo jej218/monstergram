@@ -1,37 +1,20 @@
 ## Monster-gram
 
-A Version of the Pupstagram App with a twist = Instead of uploading photos, posts are random pixel images in a "Galaga-Like" style. There Is also functionality to call an API to generate random names for the pixel monster.
+A Version of the Pupstagram App with a twist - Instead of uploading photos, posts are random pixel images in a "Galaga-Like" style. There Is also functionality to call an API to generate random names for the pixel monster.
 
 
-#### Setup your git repo
+#### Icebox
 
-1. go to github and create your github and create a repo (Without a readme or liscense you can add that later!)
-2.  Then follow the directions on github that says ```…or create a new repository on the command line```
+1. View A list of a user's liked monsters on their Profile
+2. Delete monsters that you created, from the main feed and the profile feed
+3. Set the Monster's caption to display the API parameters
+4. Upload the images to AWS for faster loading
+5. Add Profile Picture functionality
+6. Create a monster for a profile picture as part of signing up
+7. Re-implement the functinoality for creating different types of monster images
+8. Add functionality for creating different types of monster names
+9. Re style as more fitting to theme
+10. Randomize Image on monster create
+11. Add more fun Semantic Features
 
-it should look like this
-
-```
-git init
-git add .
-git commit -m "first commit"
-git remote add origin git@git.generalassemb.ly:SEI-CC/test.git // this will be whatever your address will be
-git push -u origin master
-```
-
-#### Setup the App
-
-```npm install```
-
-*DOTENV*
-
-`touch .env`
-
-add your variables
-
-```
-DATABASE_URL=mongodb://localhost:27017/testagramV2
-BUCKET_NAME=catcollectorone
-SECRET=mysecretforjwt
-```
-
-The app is configured, to use those respective key names for the database, jwt secret and aws bucket, of course you'll have your own values
+#### APIs I used
