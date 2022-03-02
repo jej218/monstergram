@@ -18,10 +18,6 @@ function signup(user) {
     })
     // Parameter destructuring!
     .then(({ token }) => tokenService.setToken(token));
-  // Setting our token in localStorage in our browser
-  // then we'll be able to use with every request!
-  // The above could have been written as
-  //.then((token) => token.token);
 }
 
 function getUser() {
@@ -45,11 +41,24 @@ function login(creds) {
     })
     .then(({ token }) => tokenService.setToken(token));
 }
+function getProfile(username) {
+  return fetch(BASE_URL + username, {
+    headers: {
+      'Authorization': 'Bearer ' + tokenService.getToken()
+    }
+  }).then(res => {
+    if (res.ok) return res.json()
+    throw new Error('User not found!')
+  })
 
+}
 
-export default {
+const userService = {
   signup,
   logout,
   login,
-  getUser
+  getUser,
+  getProfile
 };
+
+export default userService

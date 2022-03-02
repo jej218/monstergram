@@ -1,7 +1,7 @@
 import tokenService from "./tokenService"
 
 const BASE_URL = '/api/monsters/'
-const NAME_BASE_URL = 'https://api.fungenerators.com/name/generate?category=alien&limit=1&start='
+const NAME_BASE_URL = 'https://api.fungenerators.com/name/generate?limit=1&category=alien&start='
 const IMG_BASE_URL = 'https://app.pixelencounter.com/api/v2/basic/svgmonsters/'
 
 export function getRandName() {
@@ -15,7 +15,6 @@ export function getRandName() {
     }).then(function (res) {
         return (res.json())
     })
-
 }
 
 export function create(monsterInfoFromTheForm) {

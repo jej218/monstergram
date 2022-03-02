@@ -1,17 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import { Button, Dropdown, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
-
-const monsterDetailUrl = 'https://api.fungenerators.com/name/generate?category=alien&limit=1&start='
 const monsterImageUrlBase = 'https://app.pixelencounter.com/api/v2/basic/svgmonsters/'
 
-export default function AddMonster({ handleAddMonster, handleNewRandomName, handleNewRandomUrl, startSeed }) {
+export default function AddMonster({ handleAddMonster, handleNewRandomName, handleNewCategory, startSeed }) {
     const [starterSeed, setStarterSeed] = useState(startSeed)
     const [state, setState] = useState({
         title: '',
         caption: '',
         imageUrl: `${monsterImageUrlBase}${starterSeed}/image/png?size=300`
     })
+    const [selection, setSelection] = useState('alien')
+
+    const nameTypes = [
+        {
+            key: 'alien',
+            text: 'alien',
+            value: 'alien'
+        },
+        {
+            key: 'dragon',
+            text: 'dragon',
+            value: 'dragon'
+        },
+        {
+            key: 'elf',
+            text: 'elf',
+            value: 'elf'
+        },
+        {
+            key: 'pirate',
+            text: 'pirate',
+            value: 'pirate'
+        },
+        {
+            key: 'pokemon',
+            text: 'pokemon',
+            value: 'pokemon'
+        },
+        {
+            key: 'demon',
+            text: 'demon',
+            value: 'demon'
+        }
+    ]
+
     useEffect(() => {
         const makeApiCall = async () => {
             let newName = await handleNewRandomName()
@@ -76,6 +109,12 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName, hand
         }
         makeApiCall();
     }
+
+    function newType(e) {
+        e.preventDefault()
+        console.log(e.target)
+    }
+
     return (
         <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
@@ -85,21 +124,31 @@ export default function AddMonster({ handleAddMonster, handleNewRandomName, hand
                         onSubmit={handleSubmit}>
                         <img src={state.imageUrl} alt='' />
                         <Button
+                            style={{ margin: '15px' }}
                             className="btn"
                             onClick={handleNewImage}
                         >NEW RANDOM MONSTER</Button>
-                        <Form.Input
-                            className="form-control"
-                            name="title"
-                            value={state.title}
-                            placeholder={state.title}
-                            onChange={handleChange}
-                            required
-                        />
-                        <Button
-                            className="btn"
-                            onClick={handleNewName}
-                        >NEW RANDOM NAME</Button>
+                        <Segment.Group>
+                            <Segment>
+                                <Form.Input
+                                    className="form-control"
+                                    name="title"
+                                    value={state.title}
+                                    placeholder={state.title}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </Segment>
+                            <Segment.Group>
+                                <Segment>
+                                    <Button
+                                        style={{ margin: '15px' }}
+                                        className="btn"
+                                        onClick={handleNewName}
+                                    >NEW RANDOM NAME</Button>
+                                </Segment>
+                            </Segment.Group>
+                        </Segment.Group>
                         <Form.Input
                             className="form-control"
                             name="caption"

@@ -1,14 +1,35 @@
 import React from 'react';
 
-import { Header, Segment } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
+import { Header, Segment, Image, Icon } from "semantic-ui-react";
 
 
-export default function PageHeader() {
+
+export default function PageHeader({ user, handleLogout }) {
     return (
-        <Segment>
-            <Header as='h2' >
-                MONSTERGRAM
+        <Segment clearing>
+            <Header as="h2" floated="right">
+                <Link to="/">
+                    <Icon name="home"></Icon>
+                </Link>
+                <Link to="" onClick={handleLogout}>
+                    Logout
+                </Link>
+            </Header>
+            <Header as="h2" floated="left">
+                <Link to={`/${user?.username}`}>
+                    <Image
+                        src={
+                            user?.imageUrl
+                                ? user.imageUrl
+                                : "/favicon.ico"
+                        }
+                        avatar
+                    ></Image>
+                </Link>
             </Header>
         </Segment>
+
+
     )
 }
